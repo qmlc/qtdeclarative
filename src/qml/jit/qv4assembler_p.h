@@ -70,7 +70,7 @@ namespace JIT {
 
 class InstructionSelection;
 
-struct CompilationUnit : public QV4::CompiledData::CompilationUnit
+struct Q_QML_PRIVATE_EXPORT CompilationUnit : public QV4::CompiledData::CompilationUnit
 {
     virtual ~CompilationUnit();
 
