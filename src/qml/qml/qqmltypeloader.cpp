@@ -679,6 +679,11 @@ void QQmlDataBlob::notifyComplete(QQmlDataBlob *blob)
     tryDone();
 }
 
+void QQmlDataBlob::setStatus(Status status)
+{
+    m_data.setStatus(status);
+}
+
 #define TD_STATUS_MASK 0x0000FFFF
 #define TD_STATUS_SHIFT 0
 #define TD_PROGRESS_MASK 0x00FF0000
@@ -2781,7 +2786,7 @@ void QQmlScriptBlob::scriptImported(QQmlScriptBlob *blob, const QV4::CompiledDat
     m_scripts << ref;
 }
 
-void QQmlScriptBlob::initializeFromCompilationUnit(QV4::CompiledData::CompilationUnit *unit)
+void QQmlScriptBlob::initializeFromCompilationUnit(QV4::CompiledData::CompilationUnit *unit, bool import)
 {
     Q_ASSERT(!m_scriptData);
     m_scriptData = new QQmlScriptData();
@@ -2795,6 +2800,9 @@ void QQmlScriptBlob::initializeFromCompilationUnit(QV4::CompiledData::Compilatio
 
     Q_ASSERT(m_scriptData->m_precompiledScript->data->flags & QV4::CompiledData::Unit::IsQml);
     const QV4::CompiledData::QmlUnit *qmlUnit = reinterpret_cast<const QV4::CompiledData::QmlUnit*>(m_scriptData->m_precompiledScript->data);
+
+    if (!import)
+        return;
 
     QList<QQmlError> errors;
     for (quint32 i = 0; i < qmlUnit->nImports; ++i) {
