@@ -165,6 +165,9 @@ protected:
     // Callbacks made in main thread
     virtual void downloadProgressChanged(qreal);
     virtual void completed();
+
+    // called by subclasses
+    void setStatus(Status status);
 private:
     friend class QQmlDataLoader;
     friend class QQmlDataLoaderThread;
@@ -528,6 +531,7 @@ class Q_AUTOTEST_EXPORT QQmlScriptBlob : public QQmlTypeLoader::Blob
 private:
     friend class QQmlTypeLoader;
 
+protected:
     QQmlScriptBlob(const QUrl &, QQmlTypeLoader *);
 
 public:
@@ -552,9 +556,10 @@ protected:
 
     virtual QString stringAt(int index) const;
 
+    void initializeFromCompilationUnit(QV4::CompiledData::CompilationUnit *unit, bool import = true);
+
 private:
     virtual void scriptImported(QQmlScriptBlob *blob, const QV4::CompiledData::Location &location, const QString &qualifier, const QString &nameSpace);
-    void initializeFromCompilationUnit(QV4::CompiledData::CompilationUnit *unit);
 
     QList<ScriptReference> m_scripts;
     QQmlScriptData *m_scriptData;
