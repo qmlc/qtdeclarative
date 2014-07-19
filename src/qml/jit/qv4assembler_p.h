@@ -123,7 +123,7 @@ struct ExceptionCheck<void (*)(QV4::NoThrowContext *, A, B, C)> {
     enum { NeedsCheck = 0 };
 };
 
-class Assembler : public JSC::MacroAssembler
+class Q_QML_PRIVATE_EXPORT Assembler : public JSC::MacroAssembler
 {
 public:
     Assembler(InstructionSelection *isel, IR::Function* function, QV4::ExecutableAllocator *executableAllocator,
@@ -1242,6 +1242,11 @@ public:
     Label exceptionReturnLabel;
     IR::BasicBlock * catchBlock;
     QVector<Jump> exceptionPropagationJumps;
+
+    bool hasPatches() const { return _patches.size() > 0 || _dataLabelPatches.size() > 0 || _labelPatches.size() > 0; }
+
+    QList<CallToLink>& callsToLink() { return _callsToLink; }
+
 private:
     const StackLayout _stackLayout;
     ConstantTable _constTable;

@@ -962,7 +962,7 @@ typedef QHash<int, int> PropertyDependencyMap;
 // In order for optimization/transformation passes to skip uninteresting basic blocks that will be
 // removed, the block can be marked as such. After doing so, any access will result in a failing
 // assertion.
-struct Function {
+struct Q_QML_PRIVATE_EXPORT Function {
     Module *module;
     QQmlJS::MemoryPool *pool;
     const QString *name;
@@ -998,6 +998,8 @@ struct Function {
 
     Function(Module *module, Function *outer, const QString &name);
     ~Function();
+
+    Function(int tempCount, int maxNumberOfArguments) : tempCount(tempCount), maxNumberOfArguments(maxNumberOfArguments), _allBasicBlocks(0) {}
 
     enum BasicBlockInsertMode {
         InsertBlock,

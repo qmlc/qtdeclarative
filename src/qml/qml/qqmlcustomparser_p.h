@@ -115,6 +115,7 @@ private:
     QQmlCustomParserCompilerBackend *compiler;
     Flags m_flags;
     friend class QQmlPropertyValidator;
+    friend class PropertyValidator;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(QQmlCustomParser::Flags)
 

@@ -338,7 +338,7 @@ public:
         }
         
         bool isSet() const { return m_label.isSet(); }
-    private:
+
         AssemblerLabel m_label;
     };
     
@@ -746,6 +746,12 @@ public:
     {
         AssemblerType::cacheFlush(code, size);
     }
+
+    void appendData(char *data, int len)
+    {
+        return m_assembler.appendData(data, len);
+    }
+
 protected:
     AbstractMacroAssembler()
         : m_randomSource(cryptographicallyRandomNumber())

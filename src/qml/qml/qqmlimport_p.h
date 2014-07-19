@@ -142,7 +142,7 @@ private:
     QQmlImportsPrivate *d;
 };
 
-class QQmlImportDatabase
+class Q_QML_PRIVATE_EXPORT QQmlImportDatabase
 {
     Q_DECLARE_TR_FUNCTIONS(QQmlImportDatabase)
 public:

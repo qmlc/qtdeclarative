@@ -67,10 +67,12 @@ EvalInstructionSelection::EvalInstructionSelection(QV4::ExecutableAllocator *exe
         ownJSGenerator.reset(jsGenerator);
     }
     this->jsGenerator = jsGenerator;
+#if 0
 #ifndef V4_BOOTSTRAP
     Q_ASSERT(execAllocator);
 #endif
     Q_ASSERT(module);
+#endif
 }
 
 EvalInstructionSelection::~EvalInstructionSelection()
