@@ -200,7 +200,7 @@ struct SignalParameter : public QV4::CompiledData::Parameter
     SignalParameter *next;
 };
 
-struct Signal
+struct Q_QML_PRIVATE_EXPORT Signal
 {
     int nameIndex;
     QV4::CompiledData::Location location;

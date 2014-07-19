@@ -76,6 +76,8 @@ class QQmlPropertyCacheMethodArguments;
 class QQmlVMEMetaObject;
 class QQmlPropertyCacheCreator;
 class QmcUnitPropertyCacheCreator;
+class QmcTypeUnitComponentAndAliasResolver;
+class PropertyCacheCreator;
 
 // We have this somewhat awful split between RawData and Data so that RawData can be
 // used in unions.  In normal code, you should always use Data which initializes RawData
@@ -344,6 +346,9 @@ private:
     friend class QQmlPropertyCacheCreator;
     friend class QQmlComponentAndAliasResolver;
     friend class QmcUnitPropertyCacheCreator;
+    friend class QmcTypeUnitComponentAndAliasResolver;
+    friend class PropertyCacheCreator;
+    friend class ComponentAndAliasResolver;
 
     inline QQmlPropertyCache *copy(int reserve);
 
