@@ -1,0 +1,4 @@
+This repository contains modified version of the Qt Declarative module
+required to run the Qml Compiler. Please refer to documentation
+in the qmlc module to see how to use it.
+
