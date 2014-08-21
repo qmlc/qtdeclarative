@@ -271,7 +271,7 @@ public:
     QString fileName;
 };
 
-class Q_AUTOTEST_EXPORT QQmlTypeLoader : public QQmlDataLoader
+class Q_QML_EXPORT QQmlTypeLoader : public QQmlDataLoader
 {
     Q_DECLARE_TR_FUNCTIONS(QQmlTypeLoader)
 public:
@@ -400,7 +400,7 @@ private:
     QmldirBundleIdCache m_qmldirBundleIdCache;
 };
 
-class Q_AUTOTEST_EXPORT QQmlTypeData : public QQmlTypeLoader::Blob
+class Q_QML_EXPORT QQmlTypeData : public QQmlTypeLoader::Blob
 {
 public:
     struct TypeReference
@@ -495,7 +495,7 @@ private:
 // reference that was created is released but final deletion only occurs once all the
 // references as released.  This is all intended to ensure that the v8 resources are
 // only created and destroyed in the main thread :)
-class Q_AUTOTEST_EXPORT QQmlScriptData : public QQmlCleanup, public QQmlRefCount
+class Q_QML_EXPORT QQmlScriptData : public QQmlCleanup, public QQmlRefCount
 {
 private:
     friend class QQmlTypeLoader;
@@ -526,7 +526,7 @@ private:
     QV4::PersistentValue m_value;
 };
 
-class Q_AUTOTEST_EXPORT QQmlScriptBlob : public QQmlTypeLoader::Blob
+class Q_QML_EXPORT QQmlScriptBlob : public QQmlTypeLoader::Blob
 {
 private:
     friend class QQmlTypeLoader;
@@ -565,7 +565,7 @@ private:
     QQmlScriptData *m_scriptData;
 };
 
-class Q_AUTOTEST_EXPORT QQmlQmldirData : public QQmlTypeLoader::Blob
+class Q_QML_EXPORT QQmlQmldirData : public QQmlTypeLoader::Blob
 {
 private:
     friend class QQmlTypeLoader;

@@ -58,7 +58,7 @@ QT_BEGIN_NAMESPACE
 
 namespace QV4 {
 
-class Q_AUTOTEST_EXPORT ExecutableAllocator
+class Q_QML_EXPORT ExecutableAllocator
 {
 public:
     struct ChunkOfPages;

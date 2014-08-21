@@ -54,7 +54,7 @@ namespace JIT {
 
 class RegAllocInfo;
 
-class Q_QML_PRIVATE_EXPORT RegisterAllocator
+class Q_QML_EXPORT RegisterAllocator
 {
     typedef IR::LifeTimeInterval LifeTimeInterval;
 

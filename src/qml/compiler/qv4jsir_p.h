@@ -742,7 +742,7 @@ struct Phi: Stmt {
     virtual void dump(QTextStream &out, Mode mode);
 };
 
-struct Q_QML_PRIVATE_EXPORT Module {
+struct Q_QML_EXPORT Module {
     QQmlJS::MemoryPool pool;
     QVector<Function *> functions;
     Function *rootFunction;
@@ -765,7 +765,7 @@ struct Q_QML_PRIVATE_EXPORT Module {
 // Map from meta property index (existence implies dependency) to notify signal index
 typedef QHash<int, int> PropertyDependencyMap;
 
-struct Function {
+struct Q_QML_EXPORT Function {
     Module *module;
     QQmlJS::MemoryPool *pool;
     const QString *name;

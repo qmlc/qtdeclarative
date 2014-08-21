@@ -83,7 +83,7 @@ class QQmlContext;
 class QQmlContextData;
 
 // ### Merge with QV4::CompiledData::CompilationUnit
-class Q_AUTOTEST_EXPORT QQmlCompiledData : public QQmlRefCount, public QQmlCleanup
+class Q_QML_EXPORT QQmlCompiledData : public QQmlRefCount, public QQmlCleanup
 {
 public:
     QQmlCompiledData(QQmlEngine *engine);

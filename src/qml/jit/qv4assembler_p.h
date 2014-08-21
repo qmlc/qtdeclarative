@@ -70,7 +70,7 @@ namespace JIT {
 
 class InstructionSelection;
 
-struct Q_QML_PRIVATE_EXPORT CompilationUnit : public QV4::CompiledData::CompilationUnit
+struct Q_QML_EXPORT CompilationUnit : public QV4::CompiledData::CompilationUnit
 {
     virtual ~CompilationUnit();
 
@@ -123,7 +123,7 @@ struct ExceptionCheck<void (*)(QV4::NoThrowContext *, A, B, C)> {
     enum { NeedsCheck = 0 };
 };
 
-class Q_QML_PRIVATE_EXPORT Assembler : public JSC::MacroAssembler
+class Q_QML_EXPORT Assembler : public JSC::MacroAssembler
 {
 public:
     Assembler(InstructionSelection *isel, IR::Function* function, QV4::ExecutableAllocator *executableAllocator,
