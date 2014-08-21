@@ -744,7 +744,7 @@ struct Phi: Stmt {
     virtual void dump(QTextStream &out, Mode mode);
 };
 
-struct Q_QML_PRIVATE_EXPORT Module {
+struct Q_QML_EXPORT Module {
     QQmlJS::MemoryPool pool;
     QVector<Function *> functions;
     Function *rootFunction;
@@ -962,7 +962,7 @@ typedef QHash<int, int> PropertyDependencyMap;
 // In order for optimization/transformation passes to skip uninteresting basic blocks that will be
 // removed, the block can be marked as such. After doing so, any access will result in a failing
 // assertion.
-struct Q_QML_PRIVATE_EXPORT Function {
+struct Q_QML_EXPORT Function {
     Module *module;
     QQmlJS::MemoryPool *pool;
     const QString *name;

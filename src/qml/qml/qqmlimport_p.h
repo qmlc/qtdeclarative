@@ -71,7 +71,7 @@ class QQmlImportsPrivate;
 class QQmlImportDatabase;
 class QQmlTypeLoader;
 
-class Q_QML_PRIVATE_EXPORT QQmlImports
+class Q_QML_EXPORT QQmlImports
 {
 public:
     enum ImportVersion { FullyVersioned, PartiallyVersioned, Unversioned };

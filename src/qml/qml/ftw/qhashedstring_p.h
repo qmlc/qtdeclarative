@@ -70,7 +70,7 @@ QT_BEGIN_NAMESPACE
 // #define QSTRINGHASH_LINK_DEBUG
 
 class QHashedStringRef;
-class Q_AUTOTEST_EXPORT QHashedString : public QString
+class Q_QML_EXPORT QHashedString : public QString
 {
 public:
     inline QHashedString();
@@ -97,7 +97,7 @@ private:
 };
 
 class QHashedCStringRef;
-class Q_AUTOTEST_EXPORT QHashedStringRef
+class Q_QML_EXPORT QHashedStringRef
 {
 public:
     inline QHashedStringRef();

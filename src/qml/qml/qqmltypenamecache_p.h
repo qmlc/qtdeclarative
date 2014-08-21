@@ -65,7 +65,7 @@ QT_BEGIN_NAMESPACE
 
 class QQmlType;
 class QQmlEngine;
-class Q_QML_PRIVATE_EXPORT QQmlTypeNameCache : public QQmlRefCount
+class Q_QML_EXPORT QQmlTypeNameCache : public QQmlRefCount
 {
 public:
     QQmlTypeNameCache();
