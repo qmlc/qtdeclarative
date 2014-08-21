@@ -291,10 +291,10 @@ public:
         bool fetchQmldir(const QUrl &url, const QV4::CompiledData::Import *import, int priority, QList<QQmlError> *errors);
         bool updateQmldir(QQmlQmldirData *data, const QV4::CompiledData::Import *import, QList<QQmlError> *errors);
 
+        virtual void scriptImported(QQmlScriptBlob *, const QV4::CompiledData::Location &, const QString &, const QString &) {}
+
     private:
         virtual bool qmldirDataAvailable(QQmlQmldirData *, QList<QQmlError> *);
-
-        virtual void scriptImported(QQmlScriptBlob *, const QV4::CompiledData::Location &, const QString &, const QString &) {}
 
         virtual void dependencyError(QQmlDataBlob *);
         virtual void dependencyComplete(QQmlDataBlob *);
