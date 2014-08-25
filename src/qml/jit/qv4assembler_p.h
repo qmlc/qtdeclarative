@@ -144,6 +144,7 @@ public:
     static const RegisterID ScratchRegister = JSC::X86Registers::ecx;
     static const FPRegisterID FPGpr0 = JSC::X86Registers::xmm0;
     static const FPRegisterID FPGpr1 = JSC::X86Registers::xmm1;
+    static const FPRegisterID FPScratchRegister = JSC::X86Registers::xmm7;
 
     static const int RegisterSize = 4;
 
@@ -1152,7 +1153,18 @@ public:
             move(TrustedImm64(u.i), ReturnValueRegister);
             move64ToDouble(ReturnValueRegister, target);
 #else
-            JSC::MacroAssembler::loadDouble(constantTable().loadValueAddress(c, ScratchRegister), target);
+            // convert value using conversion instructions instead of const table
+            QV4::Primitive vv = convertToValue(c);
+            FPRegisterID scratchFp;
+#if CPU(X86)
+            scratchFp = FPScratchRegister;
+#else
+            // not used by other architectures
+            scratchFp = target;
+#endif
+            move(TrustedImm32(vv.int_32), ReturnValueRegister);
+            move(TrustedImm32(vv.tag), ScratchRegister);
+            moveIntsToDouble(ReturnValueRegister, ScratchRegister, target, scratchFp);
 #endif
             return target;
         }

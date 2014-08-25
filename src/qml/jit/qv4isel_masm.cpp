@@ -236,9 +236,10 @@ static QVector<int> getIntRegisters()
     return intRegisters;
 }
 
+#if CPU(X86_64)
 static QVector<int> getFpRegisters()
 {
-// linux/x86_64, linux/x86, and macos/x86_64:
+// linux/x86_64 and macos/x86_64:
     static const QVector<int> fpRegisters = QVector<int>()
             << JSC::X86Registers::xmm2
             << JSC::X86Registers::xmm3
@@ -248,6 +249,19 @@ static QVector<int> getFpRegisters()
             << JSC::X86Registers::xmm7;
     return fpRegisters;
 }
+#else
+static QVector<int> getFpRegisters()
+{
+// linux/x86
+    static const QVector<int> fpRegisters = QVector<int>()
+            << JSC::X86Registers::xmm2
+            << JSC::X86Registers::xmm3
+            << JSC::X86Registers::xmm4
+            << JSC::X86Registers::xmm5
+            << JSC::X86Registers::xmm6;
+    return fpRegisters;
+}
+#endif
 
 #elif CPU(ARM) && OS(LINUX)
     // Note: this is not generic for all ARM platforms. Specifically, r9 is platform dependent
@@ -292,8 +306,7 @@ static QVector<int> getFpRegisters()
             << JSC::X86Registers::xmm3
             << JSC::X86Registers::xmm4
             << JSC::X86Registers::xmm5
-            << JSC::X86Registers::xmm6
-            << JSC::X86Registers::xmm7;
+            << JSC::X86Registers::xmm6;
     return fpRegisters;
 }
 #endif
