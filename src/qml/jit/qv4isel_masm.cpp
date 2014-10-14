@@ -127,20 +127,27 @@ static void printDisassembledOutputWithCalls(QByteArray processedOutput, const Q
     fflush(stderr);
 }
 
+void Assembler::prelink()
+{
+    // add jumps
+    QHashIterator<IR::BasicBlock *, QVector<Jump> > it(_patches);
+    while (it.hasNext()) {
+        it.next();
+        IR::BasicBlock *block = it.key();
+        Label target = _addrs.value(block);
+        Q_ASSERT(target.isSet());
+        foreach (Jump jump, it.value())
+            jump.linkTo(target, this);
+    }
+    _prelinkDone = true;
+}
+
 JSC::MacroAssemblerCodeRef Assembler::link(int *codeSize)
 {
     Label endOfCode = label();
 
-    {
-        QHashIterator<IR::BasicBlock *, QVector<Jump> > it(_patches);
-        while (it.hasNext()) {
-            it.next();
-            IR::BasicBlock *block = it.key();
-            Label target = _addrs.value(block);
-            Q_ASSERT(target.isSet());
-            foreach (Jump jump, it.value())
-                jump.linkTo(target, this);
-        }
+    if(!_prelinkDone){
+        prelink();
     }
 
     JSC::JSGlobalData dummy(_executableAllocator);
