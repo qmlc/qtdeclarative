@@ -1248,6 +1248,7 @@ public:
         return scratchReg;
     }
 
+    void prelink(void);
     JSC::MacroAssemblerCodeRef link(int *codeSize);
 
     const StackLayout stackLayout() const { return _stackLayout; }
@@ -1294,6 +1295,7 @@ private:
 
     QV4::ExecutableAllocator *_executableAllocator;
     InstructionSelection *_isel;
+    bool _prelinkDone;
 };
 
 template <typename Result, typename Source>
