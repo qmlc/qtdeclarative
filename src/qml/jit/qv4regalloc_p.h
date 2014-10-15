@@ -41,9 +41,9 @@
 #ifndef QV4REGALLOC_P_H
 #define QV4REGALLOC_P_H
 
-#include "qv4global_p.h"
-#include "qv4isel_p.h"
-#include "qv4ssa_p.h"
+#include "private/qv4global_p.h"
+#include "private/qv4isel_p.h"
+#include "private/qv4ssa_p.h"
 
 #include <config.h>
 
