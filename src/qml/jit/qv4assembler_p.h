@@ -58,6 +58,10 @@
 #include <assembler/MacroAssembler.h>
 #include <assembler/MacroAssemblerCodeRef.h>
 
+#if CPU(ARM_THUMB2)
+#include <assembler/ARMv7Assembler.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 namespace QV4 {
@@ -1244,6 +1248,7 @@ public:
         return scratchReg;
     }
 
+    void prelink(void);
     JSC::MacroAssemblerCodeRef link(int *codeSize);
 
     const StackLayout stackLayout() const { return _stackLayout; }
@@ -1256,6 +1261,20 @@ public:
     bool hasPatches() const { return _patches.size() > 0 || _dataLabelPatches.size() > 0 || _labelPatches.size() > 0; }
 
     QList<CallToLink>& callsToLink() { return _callsToLink; }
+
+#if CPU(ARM_THUMB2)
+
+    Vector<LinkRecord, 0, UnsafeVectorOverflow> jumpsToLink() { return MacroAssembler::jumpsToLink(); }
+    void addJump(JSC::AssemblerLabel from, JSC::AssemblerLabel to,
+            JSC::ARMv7Assembler::JumpType type, JSC::ARMv7Assembler::Condition condition)
+    {
+        MacroAssembler::addJump(from, to, type, condition);
+    }
+
+    void *unlinkedCode() { return MacroAssembler::unlinkedCode(); }
+    size_t unlinkedCodeSize() { return MacroAssembler::codeSize(); }
+
+#endif
 
 private:
     const StackLayout _stackLayout;
@@ -1276,6 +1295,7 @@ private:
 
     QV4::ExecutableAllocator *_executableAllocator;
     InstructionSelection *_isel;
+    bool _prelinkDone;
 };
 
 template <typename Result, typename Source>

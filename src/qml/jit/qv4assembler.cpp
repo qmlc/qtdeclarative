@@ -153,6 +153,7 @@ Assembler::Assembler(InstructionSelection *isel, IR::Function* function, QV4::Ex
     , _nextBlock(0)
     , _executableAllocator(executableAllocator)
     , _isel(isel)
+    , _prelinkDone(false)
 {
 }
 
