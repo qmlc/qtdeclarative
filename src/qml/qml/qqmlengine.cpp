@@ -182,6 +182,7 @@ void qmlRegisterBaseTypes(const char *uri, int versionMajor, int versionMinor)
 
 bool QQmlEnginePrivate::qml_debugging_enabled = false;
 bool QQmlEnginePrivate::s_designerMode = false;
+QQmlLoadCallbackFunction QQmlEnginePrivate::loadCallback = NULL;
 
 // these types are part of the QML language
 void QQmlEnginePrivate::registerBaseTypes(const char *uri, int versionMajor, int versionMinor)
@@ -1199,6 +1200,19 @@ void QQmlEngine::setOutputWarningsToStandardError(bool enabled)
     Q_D(QQmlEngine);
     d->outputWarningsToStdErr = enabled;
 }
+
+QQmlLoadCallbackFunction QQmlEngine::getLoadCallback(void)
+{
+    Q_D(QQmlEngine);
+    return d->loadCallback;
+}
+
+void QQmlEngine::setLoadCallback(QQmlLoadCallbackFunction callback)
+{
+    Q_D(QQmlEngine);
+    d->loadCallback = callback;
+}
+
 
 /*!
   Returns the QQmlContext for the \a object, or 0 if no
