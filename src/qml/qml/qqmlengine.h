@@ -79,6 +79,7 @@ private:
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(QQmlImageProviderBase::Flags)
 
+class QQmlEngine;
 class QQmlComponent;
 class QQmlEnginePrivate;
 class QQmlImportsPrivate;
@@ -90,6 +91,9 @@ class QScriptContext;
 class QNetworkAccessManager;
 class QQmlNetworkAccessManagerFactory;
 class QQmlIncubationController;
+
+typedef QQmlComponent *(*QQmlLoadCallbackFunction)(QQmlEngine *engine, QUrl url);
+
 class Q_QML_EXPORT QQmlEngine : public QJSEngine
 {
     Q_PROPERTY(QString offlineStoragePath READ offlineStoragePath WRITE setOfflineStoragePath)
@@ -138,6 +142,9 @@ public:
 
     bool outputWarningsToStandardError() const;
     void setOutputWarningsToStandardError(bool);
+
+    QQmlLoadCallbackFunction getLoadCallback();
+    void setLoadCallback(QQmlLoadCallbackFunction callback);
 
     static QQmlContext *contextForObject(const QObject *);
     static void setContextForObject(QObject *, QQmlContext *);
