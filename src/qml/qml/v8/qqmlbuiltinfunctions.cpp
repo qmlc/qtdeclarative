@@ -1131,8 +1131,16 @@ ReturnedValue QtObject::method_createComponent(CallContext *ctx)
         }
     }
 
+    QQmlComponent *c;
+    QQmlLoadCallbackFunction loadCallback = engine->getLoadCallback();
     QUrl url = context->resolvedUrl(QUrl(arg));
-    QQmlComponent *c = new QQmlComponent(engine, url, compileMode, parentArg);
+    /* if loadCallback is set we call it in place of creating a new component,
+     * loadCallback can load the compiled data for example */
+    if(loadCallback){
+        c = loadCallback(engine, url);
+    }else{
+        c = new QQmlComponent(engine, url, compileMode, parentArg);
+    }
     QQmlComponentPrivate::get(c)->creationContext = effectiveContext;
     QQmlData::get(c, true)->explicitIndestructibleSet = false;
     QQmlData::get(c)->indestructible = false;
