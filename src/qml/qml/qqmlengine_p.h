@@ -272,6 +272,7 @@ public:
     // if this is set the callback will be called in place of creating a new
     // component
     static QQmlLoadCallbackFunction loadCallback;
+    static void *loadCallbackData;
 
 private:
     // Locker locks the QQmlEnginePrivate data structures for read and write, if necessary.
