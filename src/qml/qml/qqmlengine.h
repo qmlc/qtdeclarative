@@ -92,7 +92,7 @@ class QNetworkAccessManager;
 class QQmlNetworkAccessManagerFactory;
 class QQmlIncubationController;
 
-typedef QQmlComponent *(*QQmlLoadCallbackFunction)(QQmlEngine *engine, QUrl url);
+typedef QQmlComponent *(*QQmlLoadCallbackFunction)(QQmlEngine *engine, QUrl url, void *data);
 
 class Q_QML_EXPORT QQmlEngine : public QJSEngine
 {
@@ -144,7 +144,8 @@ public:
     void setOutputWarningsToStandardError(bool);
 
     QQmlLoadCallbackFunction getLoadCallback();
-    void setLoadCallback(QQmlLoadCallbackFunction callback);
+    void *getLoadCallbackData();
+    void setLoadCallback(QQmlLoadCallbackFunction callback, void *data);
 
     static QQmlContext *contextForObject(const QObject *);
     static void setContextForObject(QObject *, QQmlContext *);
