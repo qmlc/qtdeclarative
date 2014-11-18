@@ -184,6 +184,7 @@ void qmlRegisterBaseTypes(const char *uri, int versionMajor, int versionMinor)
 bool QQmlEnginePrivate::qml_debugging_enabled = false;
 bool QQmlEnginePrivate::s_designerMode = false;
 QQmlLoadCallbackFunction QQmlEnginePrivate::loadCallback = NULL;
+void *QQmlEnginePrivate::loadCallbackData = NULL;
 
 // these types are part of the QML language
 void QQmlEnginePrivate::registerBaseTypes(const char *uri, int versionMajor, int versionMinor)
@@ -1208,10 +1209,17 @@ QQmlLoadCallbackFunction QQmlEngine::getLoadCallback(void)
     return d->loadCallback;
 }
 
-void QQmlEngine::setLoadCallback(QQmlLoadCallbackFunction callback)
+void *QQmlEngine::getLoadCallbackData(void)
+{
+    Q_D(QQmlEngine);
+    return d->loadCallbackData;
+}
+
+void QQmlEngine::setLoadCallback(QQmlLoadCallbackFunction callback, void *data)
 {
     Q_D(QQmlEngine);
     d->loadCallback = callback;
+    d->loadCallbackData = data;
 }
 
 

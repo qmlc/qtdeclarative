@@ -1137,7 +1137,7 @@ ReturnedValue QtObject::method_createComponent(CallContext *ctx)
     /* if loadCallback is set we call it in place of creating a new component,
      * loadCallback can load the compiled data for example */
     if(loadCallback){
-        c = loadCallback(engine, url);
+        c = loadCallback(engine, url, engine->getLoadCallbackData());
     }else{
         c = new QQmlComponent(engine, url, compileMode, parentArg);
     }
