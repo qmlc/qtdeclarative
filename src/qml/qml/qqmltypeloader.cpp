@@ -2648,6 +2648,13 @@ QV4::PersistentValue QQmlScriptData::scriptValueForContext(QQmlContextData *pare
     return rv;
 }
 
+QV4::Script *QQmlScriptData::program(QQmlEngine *engine)
+{
+    if (!hasEngine())
+        initialize(engine);
+    return m_program;
+}
+
 void QQmlScriptData::clear()
 {
     if (importCache) {

@@ -1034,7 +1034,7 @@ QString QQmlImportsPrivate::resolvedUri(const QString &dir_arg, QQmlImportDataba
 
     QString stableRelativePath = dir;
     foreach(const QString &path, paths) {
-        if (dir.startsWith(path)) {
+        if (dir.startsWith(path) && path.length() < dir.length()) {
             stableRelativePath = dir.mid(path.length()+1);
             break;
         }

@@ -93,6 +93,7 @@ void QDebugMessageService::sendDebugMessage(QtMsgType type,
                                             const QMessageLogContext &ctxt,
                                             const QString &buf)
 {
+    if (!this) return; // When app exits normally this is a NULL pointer.
     Q_D(QDebugMessageService);
 
     //We do not want to alter the message handling mechanism

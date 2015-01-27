@@ -815,6 +815,7 @@ void QQmlEnginePrivate::init()
     qRegisterMetaType<QList<QObject*> >();
     qRegisterMetaType<QList<int> >();
     qRegisterMetaType<QQmlV4Handle>();
+    qRegisterMetaType<QQmlBinding*>();
 
     v8engine()->setEngine(q);
 

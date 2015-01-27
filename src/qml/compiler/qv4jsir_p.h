@@ -248,7 +248,7 @@ struct MemberExpressionResolver
     unsigned int isQObjectResolver; // neede for IR dump helpers
 };
 
-struct Q_AUTOTEST_EXPORT Expr {
+struct Q_QML_PRIVATE_EXPORT Expr {
     Type type;
 
     Expr(): type(UnknownType) {}
@@ -271,7 +271,7 @@ struct Q_AUTOTEST_EXPORT Expr {
     virtual void dump(QTextStream &out) const = 0;
 };
 
-struct ExprList {
+struct Q_QML_PRIVATE_EXPORT ExprList {
     Expr *expr;
     ExprList *next;
 
@@ -284,7 +284,7 @@ struct ExprList {
     }
 };
 
-struct Const: Expr {
+struct Q_QML_PRIVATE_EXPORT Const: Expr {
     double value;
 
     void init(Type type, double value)
@@ -337,7 +337,7 @@ struct RegExp: Expr {
     virtual void dump(QTextStream &out) const;
 };
 
-struct Name: Expr {
+struct Q_QML_PRIVATE_EXPORT Name: Expr {
     enum Builtin {
         builtin_invalid,
         builtin_typeof,
@@ -495,7 +495,7 @@ struct Binop: Expr {
     virtual void dump(QTextStream &out) const;
 };
 
-struct Call: Expr {
+struct Q_QML_PRIVATE_EXPORT Call: Expr {
     Expr *base; // Name, Member, Temp
     ExprList *args; // List of Temps
 
@@ -609,7 +609,7 @@ struct Member: Expr {
     virtual void dump(QTextStream &out) const;
 };
 
-struct Stmt {
+struct Q_QML_PRIVATE_EXPORT Stmt {
     enum Mode {
         HIR,
         MIR
@@ -649,7 +649,7 @@ struct Stmt {
     }
 };
 
-struct Exp: Stmt {
+struct Q_QML_PRIVATE_EXPORT Exp: Stmt {
     Expr *expr;
 
     void init(Expr *expr)
@@ -817,6 +817,12 @@ struct Q_QML_EXPORT Function {
         , line(-1)
         , column(-1)
     { this->name = newString(name); }
+
+    Function(int tempCount, int maxNumberOfArguments)
+        : tempCount(tempCount),
+          maxNumberOfArguments(maxNumberOfArguments)
+    {
+    }
 
     ~Function();
 
