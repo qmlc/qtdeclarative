@@ -210,6 +210,14 @@ QV4::ReturnedValue QV4Include::method_include(QV4::CallContext *ctx)
         result = i->result();
 
     } else {
+        if (QV8Engine::getV4(engine)->getJscLoadCallback()) {
+            if (QV8Engine::getV4(engine)->getJscLoadCallback()(ctx)) {
+                result = resultValue(v4, Ok);
+                callback(callbackFunction, result);
+                return result.asReturnedValue();
+            }
+            // Otherwise there was no jsc file or loading it failed. Try js.
+        }
 
         QFile f(localFile);
 

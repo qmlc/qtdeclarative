@@ -141,7 +141,7 @@ public:
     };
 
     Debugger(ExecutionEngine *engine);
-    ~Debugger();
+    virtual ~Debugger();
 
     ExecutionEngine *engine() const
     { return m_engine; }
@@ -150,9 +150,9 @@ public:
     void detachFromAgent();
     DebuggerAgent *agent() const { return m_agent; }
 
-    void gatherSources(int requestSequenceNr);
+    virtual void gatherSources(int requestSequenceNr);
     void pause();
-    void resume(Speed speed);
+    virtual void resume(Speed speed);
 
     State state() const { return m_state; }
 
@@ -167,29 +167,29 @@ public:
         QString fileName;
         int lineNumber;
     };
-    ExecutionState currentExecutionState() const;
+    virtual ExecutionState currentExecutionState() const;
 
     bool pauseAtNextOpportunity() const {
         return m_pauseRequested || m_haveBreakPoints || m_gatherSources || m_stepping >= StepOver;
     }
 
     QVector<StackFrame> stackTrace(int frameLimit = -1) const;
-    void collectArgumentsInContext(Collector *collector, int frameNr = 0, int scopeNr = 0);
-    void collectLocalsInContext(Collector *collector, int frameNr = 0, int scopeNr = 0);
-    bool collectThisInContext(Collector *collector, int frame = 0);
-    void collectThrownValue(Collector *collector);
-    void collectReturnedValue(Collector *collector) const;
-    QVector<ExecutionContext::ContextType> getScopeTypes(int frame = 0) const;
+    virtual void collectArgumentsInContext(Collector *collector, int frameNr = 0, int scopeNr = 0);
+    virtual void collectLocalsInContext(Collector *collector, int frameNr = 0, int scopeNr = 0);
+    virtual bool collectThisInContext(Collector *collector, int frame = 0);
+    virtual void collectThrownValue(Collector *collector);
+    virtual void collectReturnedValue(Collector *collector) const;
+    virtual QVector<ExecutionContext::ContextType> getScopeTypes(int frame = 0) const;
 
 public: // compile-time interface
-    void maybeBreakAtInstruction();
+    virtual void maybeBreakAtInstruction();
 
 public: // execution hooks
-    void enteringFunction();
-    void leavingFunction(const ReturnedValue &retVal);
-    void aboutToThrow();
+    virtual void enteringFunction();
+    virtual void leavingFunction(const ReturnedValue &retVal);
+    virtual void aboutToThrow();
 
-private:
+protected:
     Function *getFunction() const;
 
     // requires lock to be held
@@ -200,7 +200,7 @@ private:
     void runInEngine(Job *job);
     void runInEngine_havingLock(Debugger::Job *job);
 
-private:
+protected:
     QV4::ExecutionEngine *m_engine;
     QV4::ExecutionContext *m_currentContext;
     DebuggerAgent *m_agent;

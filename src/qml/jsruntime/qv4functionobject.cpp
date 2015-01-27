@@ -59,6 +59,8 @@
 #include <qv4jsir_p.h>
 #include <qv4codegen_p.h>
 #include "private/qlocale_tools_p.h"
+#include <private/qv4engine_p.h>
+#include <private/qv4debugging_p.h>
 
 #include <QtCore/qmath.h>
 #include <QtCore/QDebug>
@@ -526,7 +528,11 @@ ReturnedValue SimpleScriptFunction::call(Managed *that, CallData *callData)
     }
     Q_ASSERT(v4->currentContext() == &ctx);
 
+    if (ctx.engine->debugger && QV4::ExecutionEngine::debuggerMaker)
+        ctx.engine->debugger->enteringFunction();
     ScopedValue result(scope, Q_V4_PROFILE(v4, &ctx, f->function));
+    if (ctx.engine->debugger && QV4::ExecutionEngine::debuggerMaker)
+        ctx.engine->debugger->leavingFunction(result.asReturnedValue());
 
     if (f->function->compiledFunction->hasQmlDependencies())
         QmlContextWrapper::registerQmlDependencies(v4, f->function->compiledFunction);
