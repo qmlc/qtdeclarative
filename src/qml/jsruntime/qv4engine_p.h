@@ -116,6 +116,9 @@ class RegExpCache;
 struct QmlExtensions;
 struct Exception;
 struct ExecutionContextSaver;
+struct CallContext;
+
+typedef bool (*JscLoadCallbackFunction)(CallContext*);
 
 #define CHECK_STACK_LIMITS(v4) \
     if ((v4->jsStackTop <= v4->jsStackLimit) && (reinterpret_cast<quintptr>(&v4) >= v4->cStackLimit || v4->recheckCStackLimits())) {}  \
@@ -299,6 +302,9 @@ public:
     ExecutionEngine(EvalISelFactory *iselFactory = 0);
     ~ExecutionEngine();
 
+    typedef QV4::Debugging::Debugger *(*DebuggerMakerFunc)(ExecutionEngine*);
+    static DebuggerMakerFunc debuggerMaker;
+
     void enableDebugger();
     void enableProfiler();
 
@@ -371,8 +377,12 @@ public:
     // Use only inside catch(...) -- will re-throw if no JS exception
     static QQmlError catchExceptionAsQmlError(QV4::ExecutionContext *context);
 
+    JscLoadCallbackFunction getJscLoadCallback();
+    void setJscLoadCallback(JscLoadCallbackFunction callback);
+
 private:
     QmlExtensions *m_qmlExtensions;
+    static JscLoadCallbackFunction jscLoadCallback;
 };
 
 inline

@@ -512,6 +512,7 @@ public:
 
     QV4::PersistentValue scriptValueForContext(QQmlContextData *parentCtxt);
 
+    QV4::Script *program(QQmlEngine *engine);
 protected:
     virtual void clear(); // From QQmlCleanup
 
@@ -559,10 +560,10 @@ protected:
     void initializeFromCompilationUnit(QV4::CompiledData::CompilationUnit *unit, bool import = true);
     virtual void scriptImported(QQmlScriptBlob *blob, const QV4::CompiledData::Location &location, const QString &qualifier, const QString &nameSpace);
 
-private:
-
-    QList<ScriptReference> m_scripts;
     QQmlScriptData *m_scriptData;
+
+private:
+    QList<ScriptReference> m_scripts;
 };
 
 class Q_QML_EXPORT QQmlQmldirData : public QQmlTypeLoader::Blob

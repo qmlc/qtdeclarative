@@ -441,11 +441,17 @@ ExecutionEngine::~ExecutionEngine()
     delete [] argumentsAccessors;
 }
 
+ExecutionEngine::DebuggerMakerFunc ExecutionEngine::debuggerMaker = NULL;
+
 void ExecutionEngine::enableDebugger()
 {
     Q_ASSERT(!debugger);
-    debugger = new Debugging::Debugger(this);
-    iselFactory.reset(new Moth::ISelFactory);
+    if (ExecutionEngine::debuggerMaker)
+        debugger = ExecutionEngine::debuggerMaker(this);
+    else {
+        debugger = new Debugging::Debugger(this);
+        iselFactory.reset(new Moth::ISelFactory);
+    }
 }
 
 void ExecutionEngine::enableProfiler()
@@ -987,6 +993,18 @@ bool ExecutionEngine::recheckCStackLimits()
     cStackLimit = getStackLimit();
 
     return (reinterpret_cast<quintptr>(&dummy) >= cStackLimit);
+}
+
+JscLoadCallbackFunction ExecutionEngine::jscLoadCallback = NULL;
+
+JscLoadCallbackFunction ExecutionEngine::getJscLoadCallback()
+{
+    return ExecutionEngine::jscLoadCallback;
+}
+
+void ExecutionEngine::setJscLoadCallback(JscLoadCallbackFunction callback)
+{
+    ExecutionEngine::jscLoadCallback = callback;
 }
 
 QT_END_NAMESPACE

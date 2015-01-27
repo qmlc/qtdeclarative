@@ -74,6 +74,8 @@ public:
 
     void *addConstantTable(QVector<QV4::Primitive> *values);
 protected:
+    InstructionSelection() : EvalInstructionSelection(NULL, NULL, NULL) {}
+
     virtual QV4::CompiledData::CompilationUnit *backendCompileStep();
 
     virtual void callBuiltinInvalid(IR::Name *func, IR::ExprList *args, IR::Temp *result);
@@ -243,6 +245,7 @@ private:
         generateLookupCall(retval, index, getterSetterOffset, arg1, arg2, Assembler::VoidType());
     }
 
+protected:
     IR::BasicBlock *_block;
     QSet<IR::Jump *> _removableJumps;
     Assembler* _as;

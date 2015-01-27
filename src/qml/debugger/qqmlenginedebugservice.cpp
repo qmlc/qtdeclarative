@@ -373,7 +373,12 @@ QQmlEngineDebugService::objectData(QObject *object)
     QQmlData *ddata = QQmlData::get(object);
     QQmlObjectData rv;
     if (ddata && ddata->outerContext) {
-        rv.url = ddata->outerContext->url;
+        QString tmp = ddata->outerContext->url.url();
+        QRegExp reqmc(QLatin1String("qmc$"));
+        tmp.replace(reqmc, QLatin1String("qml"));
+        QRegExp rejsc(QLatin1String("jsc$"));
+        tmp.replace(rejsc, QLatin1String("js"));
+        rv.url = QUrl(tmp);
         rv.lineNumber = ddata->lineNumber;
         rv.columnNumber = ddata->columnNumber;
     } else {
