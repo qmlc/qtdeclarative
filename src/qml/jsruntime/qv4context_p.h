@@ -153,7 +153,7 @@ struct Q_QML_EXPORT ExecutionContext : public Managed
     static void markObjects(Managed *m, ExecutionEngine *e);
 };
 
-struct CallContext : public ExecutionContext
+struct Q_QML_PRIVATE_EXPORT CallContext : public ExecutionContext
 {
     CallContext(ExecutionEngine *engine, ContextType t = Type_SimpleCallContext)
         : ExecutionContext(engine, t)
