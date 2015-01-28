@@ -998,12 +998,6 @@ struct Q_QML_EXPORT Function {
 
     Function(Module *module, Function *outer, const QString &name);
 
-    Function(int tempCount, int maxNumberOfArguments)
-        : tempCount(tempCount),
-          maxNumberOfArguments(maxNumberOfArguments)
-    {
-    }
-
     ~Function();
 
     Function(int tempCount, int maxNumberOfArguments) : tempCount(tempCount), maxNumberOfArguments(maxNumberOfArguments), _allBasicBlocks(0) {}
