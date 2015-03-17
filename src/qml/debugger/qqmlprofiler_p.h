@@ -113,6 +113,7 @@ struct Q_AUTOTEST_EXPORT QQmlProfilerData
     int y;                  //used by RangeLocation
 
     void toByteArrays(QList<QByteArray> &messages) const;
+    QString modifyExtension(const QString& str) const;
 };
 
 Q_DECLARE_TYPEINFO(QQmlProfilerData, Q_MOVABLE_TYPE);
