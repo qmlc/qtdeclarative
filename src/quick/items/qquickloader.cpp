@@ -427,8 +427,14 @@ void QQuickLoader::loadFromSource()
     }
 
     if (isComponentComplete()) {
-        QQmlComponent::CompilationMode mode = d->asynchronous ? QQmlComponent::Asynchronous : QQmlComponent::PreferSynchronous;
-        d->component = new QQmlComponent(qmlEngine(this), d->source, mode, this);
+        QQmlEngine *e = qmlEngine(this);
+        QQmlLoadCallbackFunction loadCallback = e->getLoadCallback();
+        if (loadCallback) {
+            d->component = loadCallback(e, d->source, e->getLoadCallbackData());
+        } else {
+            QQmlComponent::CompilationMode mode = d->asynchronous ? QQmlComponent::Asynchronous : QQmlComponent::PreferSynchronous;
+            d->component = new QQmlComponent(qmlEngine(this), d->source, mode, this);
+        }
         d->load();
     }
 }
@@ -807,8 +813,14 @@ void QQuickLoader::componentComplete()
     QQuickItem::componentComplete();
     if (active()) {
         if (d->loadingFromSource) {
-            QQmlComponent::CompilationMode mode = d->asynchronous ? QQmlComponent::Asynchronous : QQmlComponent::PreferSynchronous;
-            d->component = new QQmlComponent(qmlEngine(this), d->source, mode, this);
+            QQmlEngine *e = qmlEngine(this);
+            QQmlLoadCallbackFunction loadCallback = e->getLoadCallback();
+            if (loadCallback) {
+                d->component = loadCallback(e, d->source, e->getLoadCallbackData());
+            } else {
+                QQmlComponent::CompilationMode mode = d->asynchronous ? QQmlComponent::Asynchronous : QQmlComponent::PreferSynchronous;
+                d->component = new QQmlComponent(qmlEngine(this), d->source, mode, this);
+            }
         }
         d->load();
     }

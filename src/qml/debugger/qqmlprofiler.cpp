@@ -70,10 +70,10 @@ void QQmlProfilerData::toByteArrays(QList<QByteArray> &messages) const
                     ds << QQmlProfilerDefinitions::QmlBinding;
                 break;
             case QQmlProfilerDefinitions::RangeData:
-                ds << detailString;
+                ds << modifyExtension(detailString);
                 break;
             case QQmlProfilerDefinitions::RangeLocation:
-                ds << (detailUrl.isEmpty() ? detailString : detailUrl.toString()) << x << y;
+                ds << (detailUrl.isEmpty() ? modifyExtension(detailString) : modifyExtension(detailUrl.toString())) << x << y;
                 break;
             case QQmlProfilerDefinitions::RangeEnd: break;
             default:
@@ -84,6 +84,16 @@ void QQmlProfilerData::toByteArrays(QList<QByteArray> &messages) const
             data.clear();
         }
     }
+}
+
+QString QQmlProfilerData::modifyExtension(const QString& str) const
+{
+    QString mod(str);
+    if (mod.endsWith(".qmc"))
+        mod.replace(mod.size() - 1, 1, "l");
+    else if (mod.endsWith(".jsc"))
+        mod.remove(mod.size() - 1, 1);
+    return mod;
 }
 
 QQmlProfilerAdapter::QQmlProfilerAdapter(QQmlProfilerService *service, QQmlEnginePrivate *engine) :
