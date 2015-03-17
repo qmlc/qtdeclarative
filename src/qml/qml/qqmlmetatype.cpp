@@ -237,10 +237,17 @@ void QQmlType::SingletonInstanceInfo::init(QQmlEngine *e)
         v4->popContext();
     } else if (!url.isEmpty() && !qobjectApi(e)) {
         v4->pushGlobalContext();
-        QQmlComponent component(e, url, QQmlComponent::PreferSynchronous);
-        QObject *o = component.create();
+        QQmlComponent* c = NULL;
+        QQmlLoadCallbackFunction loadCallback = e->getLoadCallback();
+        if (loadCallback) {
+            c = loadCallback(e, url, e->getLoadCallbackData());
+        } else {
+            c = new QQmlComponent(e, url, QQmlComponent::PreferSynchronous);
+        }
+        QObject *o = c->create();
         setQObjectApi(e, o);
         v4->popContext();
+        delete c;
     }
 }
 
